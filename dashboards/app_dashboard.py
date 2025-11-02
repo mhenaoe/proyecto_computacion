@@ -10,9 +10,9 @@ df = pd.read_csv('df_oasis_clean.csv')
 df['amount_transaction'] = df['amount_transaction'] / 100
 df['amount_third'] = df['amount_third'] / 100
 
-# Convertir fechas
-df['start_date_time'] = pd.to_datetime(df['start_date_time'])
-df['end_date_time'] = pd.to_datetime(df['end_date_time'])
+# Convertir fechas (format='mixed' maneja diferentes formatos de fecha)
+df['start_date_time'] = pd.to_datetime(df['start_date_time'], format='mixed')
+df['end_date_time'] = pd.to_datetime(df['end_date_time'], format='mixed')
 
 # Crear variables temporales
 df['mes'] = df['start_date_time'].dt.month
@@ -73,7 +73,7 @@ app.layout = html.Div(style=container_style, children=[
     
     # Encabezado
     html.Div([
-        html.H1("📊 Dashboard Oasis - Estaciones de Carga", style=header_style),
+        html.H1("Estaciones de Carga Gráficos", style=header_style),
         html.H4("Análisis de Estaciones de Carga de Vehículos Eléctricos en Colombia",
                style={'textAlign': 'center', 'color': colors['secondary'], 'marginBottom': '30px'})
     ]),
@@ -288,4 +288,4 @@ def actualizar_dashboard(estacion, mes):
             precio_kwh, duracion_text, fig1, fig2, fig3, fig4, fig5, fig6)
 
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8050)
+    app.run(debug=True, port=8050)
